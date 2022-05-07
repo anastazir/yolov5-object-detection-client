@@ -24,6 +24,10 @@
   align-items: center;
 }
 
+.result-li{
+  color: red;
+}
+
 .image-shown{
   display: block;
   margin-left: auto;
@@ -128,18 +132,11 @@ button {
   display: flex;
 }
 
-.modal {
-  width: clamp(50%, 700px, 90%);
-  height: min(50%, 300px);
-
-  margin: auto;
-  padding: 0 2rem;
-  border-radius: 12px;
+.canvas-container {
+  min-height: 300px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
 }
-
 .result {
   width: clamp(50%, 700px, 90%);
   height: min(90%, 800px);
@@ -155,13 +152,6 @@ button {
 
 .result-text{
   display: none;
-}
-
-.lables-li{
-  text-transform: capitalize;
-  text-align: center;
-  box-shadow: 1px 1px 15px #03030399;
-  margin-bottom: 0.5rem;
 }
 
 .orange-gradient {
@@ -239,22 +229,6 @@ input {
   margin: auto;
 }
 
-ul,
-li {
-  padding: 0;
-  margin: 0;
-}
-
-ul {
-  position: fixed;
-  bottom: 0.5rem;
-  right: 0;
-  top: 0.5rem;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
 
 .bottom {
   justify-content: flex-end;
@@ -262,18 +236,6 @@ ul {
 
 .top {
   justify-content: flex-start;
-}
-
-li {
-  width: 225px;
-  margin: 0.5rem 1.5rem;
-  padding: 0 1rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  border-radius: 4px;
 }
 
 .notification-text {
@@ -303,6 +265,13 @@ li {
   padding: 0 1rem;
   margin: 2rem auto auto 0;
   background: #5921c2;
+  color: var(--dark);
+}
+
+.download-button{
+  padding: 0 1rem;
+  margin: 2rem auto auto 0;
+  background: #f4f013;
   color: var(--dark);
 }
 
@@ -366,15 +335,24 @@ li {
     font-size: 250%;
   }
 }
+table {
+  color: white;
+  border: 2px solid forestgreen;
+  /* width: 800px;
+  height: 200px; */
+  width: 100%;
+}
 
+th {
+  max-height: 10%;
+  border-bottom: 1px solid #ff9d00;
+}
+  
+td {
+  text-align: center;
+}
 @media screen and (max-width: 960px) {
-  .lables-li{
-    text-transform: capitalize;
-    width: 100%;
-    margin-left: 1.5rem;
-    box-shadow: 1px 1px 15px #03030399;
-    margin-bottom: 0.5rem;
-  }
+
 #left, #middle, #right {display: block;
     *display: inline; zoom: 1; 
     vertical-align: top; 
@@ -421,23 +399,14 @@ li {
     flex-direction: column;
     margin: auto;
   }
-  .result-text-li{
-    width: 100%;
-    color: rgba(255,255,255);
-    background-color: black;
-    margin: auto;
-    padding: 2rem;
-    z-index: -1;
-    position: none;
-  }
   .image-shown{
     max-width: 100%;
   }
 }
 
 @media only screen and (max-width:400px){
-  .canvas{
-    display: none;
+  table{
+    max-height: 30px;
   }
 }
 
