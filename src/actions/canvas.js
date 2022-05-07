@@ -1,4 +1,4 @@
-import { START_LOADING, END_LOADING, RESULT, ERROR, OPEN, PING } from '../constants/modalTypes';
+import { START_LOADING, END_LOADING, RESULT, ERROR, OPEN, PING } from '../constants/constants';
 import * as api from '../api/index.js';
 
 export const predictImage = (formData) => async (dispatch) => {

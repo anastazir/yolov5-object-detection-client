@@ -1,6 +1,6 @@
-import * as actionTypes from "../constants/modalTypes"
+import * as actionTypes from "../constants/constants"
 
-const modalReducer = (state = {loading: false, result : null, error : null, openModal : false, connectedToServer: false}, action) => {
+const canvasReducer = (state = {loading: false, result : null, error : null, openCanvas : false, connectedToServer: false}, action) => {
     switch (action.type) {
         case actionTypes.START_LOADING:
             return { ...state, loading: true}            
@@ -13,10 +13,10 @@ const modalReducer = (state = {loading: false, result : null, error : null, open
             console.log("==========================error", action.error)
             return { ...state, error: action.error}
         case actionTypes.OPEN:{
-            return { ...state, openModal : true}
+            return { ...state, openCanvas : true}
         }
         case actionTypes.CLOSE:{
-            return { ...state, openModal : false}
+            return { ...state, openCanvas : false}
         }
         case actionTypes.PING:{
             return { ...state, connectedToServer: action.data}
@@ -26,4 +26,4 @@ const modalReducer = (state = {loading: false, result : null, error : null, open
     }
 }
 
-export default modalReducer
+export default canvasReducer
