@@ -1,4 +1,4 @@
-import * as actionTypes from "../constants/modalTypes"
+import * as actionTypes from "../constants/constants"
 
 const imageReducer = (state = {image: actionTypes.IMAGE_URL}, action) => {
     switch (action.type){

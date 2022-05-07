@@ -1,4 +1,4 @@
-import { UPDATE_IMAGE, UPDATE_FILE_IMAGE } from '../constants/modalTypes';
+import { UPDATE_IMAGE, UPDATE_FILE_IMAGE } from '../constants/constants';
 
 export const updateImage = (imageURL) => async (dispatch) => {
     dispatch({type: UPDATE_IMAGE, data: imageURL});

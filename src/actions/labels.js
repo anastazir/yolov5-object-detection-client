@@ -1,4 +1,4 @@
-import { FETCH_LABELS, ERROR } from '../constants/modalTypes';
+import { FETCH_LABELS, ERROR } from '../constants/constants';
 import * as api from '../api/index.js';
 import { getLocalStorage } from "../helper/localStorage";
 
