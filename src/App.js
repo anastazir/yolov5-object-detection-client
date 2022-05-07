@@ -2,10 +2,9 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import { useState } from                  "react";
 import { useSelector } from               'react-redux';
-import { AnimatePresence, motion } from   "framer-motion";
+import { AnimatePresence, motion } from                    "framer-motion";
 import validator from                     'validator';
 import Input from                         "./components/Input";
-import Modal from                         "./components/Modal";
 import ImageShow from                     "./components/ImageShow/ImageShow";
 import ThreeDotsWave from                 "./components/Loading/ThreeDotsWave";
 import Header from                        "./components/Header/Header";
@@ -13,13 +12,15 @@ import { randomImages } from              "./helper/randomImages";
 import { useDispatch } from               "react-redux";
 import { updateImage } from               "./actions/image";
 import { compressFile } from              "./helper/compressFile";
-import { predictFile, predictImage } from "./actions/modal";
+import { predictFile, predictImage } from "./actions/canvas";
+import Canvas from                        "./components/Canvas/Canvas";
+import ResultDiv from                     "./components/ResultDiv/ResultDiv";
 
 function App() {
   const dispatch = useDispatch();
   const [base64, setbase64] = useState(null)
-  const loading = useSelector((state) => state.modalReducer.loading);
-  const openModal = useSelector((state) => state.modalReducer.openModal);
+  const loading = useSelector((state) => state.canvasReducer.loading);
+  const openCanvas = useSelector((state) => state.canvasReducer.openCanvas);
   let uploadedImage= null
   // Modal type
   const [modalType, setModalType] = useState("dropIn");
@@ -27,12 +28,13 @@ function App() {
   // Notification text
   const [text, setText] = useState("");
   const handleText = (e) =>{
+    dispatch({type : "CLOSE"})
     setText(e.target.value)
     dispatch(updateImage(e.target.value))
   };
 
   const onImageFileChange= async (e) =>{
-
+    dispatch({type : "CLOSE"})
     if((e.target.files && e.target.files[0])) {
       uploadedImage= e.target.files[0]
 
@@ -42,8 +44,9 @@ function App() {
       setbase64(file[0].data);
     }
   }
-  
+
   const predictImageFile = async () =>{
+    dispatch({type: "CLOSE"})
     console.log(base64.slice(0, 5));
     const formData = {
       "type": "1",
@@ -56,11 +59,13 @@ function App() {
 
   const readFromClipboard = async ()=>{
     const clipboardText = await navigator.clipboard.readText();
+    dispatch({type : "CLOSE"})
     setText(clipboardText)
     dispatch(updateImage(clipboardText))
   }
 
   const validateUrl = () =>{
+    dispatch({type : "CLOSE"})
     if(text){
       if (validator.isURL(text)){
         if(!loading){
@@ -82,10 +87,19 @@ function App() {
       dispatch({type : "OPEN"})
     }
   }
-
+  const download = () =>{
+    let downloadLink = document.createElement('a');
+    downloadLink.setAttribute('download', 'CanvasAsImage.png');
+    let canvas = document.getElementById('canvas');
+    let dataURL = canvas.toDataURL('image/png');
+    let url = dataURL.replace(/^data:image\/png/,'data:application/octet-stream');
+    downloadLink.setAttribute('href',url);
+    downloadLink.click();
+  }
   return (
   <>
     <Header />
+    <div>
     <div id="left">
       <motion.main>
         <SubHeader text="Select File from local directory" />
@@ -103,7 +117,7 @@ function App() {
           placeHolder="Add image URL 🚀"
           value={text}
           onChange={handleText}
-        />
+          />
         <br />
         <div className="predict-random">
           {  loading ? 
@@ -121,6 +135,7 @@ function App() {
                 whileTap={{ scale: 0.9 }}
                 className="random-button"
                 onClick={()=>{
+                  dispatch({type : "CLOSE"})
                   var url=randomImages()
                   setText(url)
                   dispatch(updateImage(url))}}>
@@ -132,35 +147,33 @@ function App() {
                 className="copy-button"
                 onClick={readFromClipboard}>
                 Copy From Clipboard
-              </motion.button> 
+              </motion.button>
+              {openCanvas && (
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="download-button"
+                onClick={download}>
+                Download Image
+              </motion.button>
+              )}
             </>
           }
         </div>
       </motion.main>
-
-      <ModalContainer>
-        {openModal && (
-          <Modal text={modalType} type = {modalType}/>
-        )}
-      </ModalContainer>
-
     </div>
     <div id='right'>
-      <ImageShow />
+      {openCanvas ? <Canvas/> : <ImageShow />}
     </div>
+    </div>
+    <AnimatePresence exitBeforeEnter={true} initial={false}>
+      {openCanvas && (<ResultDiv />)}
+    </AnimatePresence>
   </>
   );
 }
 
 const SubHeader = ({ text }) => <motion.h2 className="sub-header">{text}</motion.h2>;
 
-const ModalContainer = ({ children }) => (
-  <AnimatePresence
-    initial={false}
-    exitBeforeEnter={true}
-  >
-    {children}
-  </AnimatePresence>
-);
 
 export default App;
