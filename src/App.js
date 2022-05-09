@@ -2,8 +2,9 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import { useState } from                  "react";
 import { useSelector } from               'react-redux';
-import { AnimatePresence, motion } from                    "framer-motion";
+import { AnimatePresence, motion } from   "framer-motion";
 import validator from                     'validator';
+
 import Input from                         "./components/Input";
 import ImageShow from                     "./components/ImageShow/ImageShow";
 import ThreeDotsWave from                 "./components/Loading/ThreeDotsWave";
@@ -15,6 +16,7 @@ import { compressFile } from              "./helper/compressFile";
 import { predictFile, predictImage } from "./actions/canvas";
 import Canvas from                        "./components/Canvas/Canvas";
 import ResultDiv from                     "./components/ResultDiv/ResultDiv";
+import RadioButtons from                  "./components/RadioButtons/RadioButtons";
 
 function App() {
   const dispatch = useDispatch();
@@ -102,6 +104,7 @@ function App() {
     <div>
     <div id="left">
       <motion.main>
+        <RadioButtons />
         <SubHeader text="Select File from local directory" />
         <input type="file" name="file" accept="image/*" className="input" onChange={onImageFileChange} /> 
         <motion.button
