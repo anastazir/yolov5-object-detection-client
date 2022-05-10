@@ -20,15 +20,16 @@ import RadioButtons from                  "./components/RadioButtons/RadioButton
 
 function App() {
   const dispatch = useDispatch();
+
   const [base64, setbase64] = useState(null)
+  const [inference, setInference] = useState(false)
+  const [model, setModel] = useState(1)
   const loading = useSelector((state) => state.canvasReducer.loading);
   const openCanvas = useSelector((state) => state.canvasReducer.openCanvas);
-  let uploadedImage= null
-  // Modal type
-  const [modalType, setModalType] = useState("dropIn");
-
-  // Notification text
   const [text, setText] = useState("");
+  
+  let uploadedImage= null
+
   const handleText = (e) =>{
     dispatch({type : "CLOSE"})
     setText(e.target.value)
@@ -51,11 +52,12 @@ function App() {
     dispatch({type: "CLOSE"})
     console.log(base64.slice(0, 5));
     const formData = {
-      "type": "1",
+      "type": model,
       "base64": base64,
-      "int8": "false"
+      "int8": "false",
+      "int16": inference,
+      "model": model
     }
-    setModalType('result')
     dispatch(predictFile(formData))
   }
 
@@ -74,18 +76,16 @@ function App() {
           const formData = {
             "url" : text,
             "int8" :"false",
-            "type": "1"
+            "type": model,
+            "int16": inference,
           }
-          setModalType('result')
           dispatch(predictImage(formData))
         }
       }
       else{
-        setModalType('invalid')
         dispatch({type : "OPEN"})
       }
     }else{
-      setModalType('emptyInput')
       dispatch({type : "OPEN"})
     }
   }
@@ -104,7 +104,9 @@ function App() {
     <div>
     <div id="left">
       <motion.main>
-        <RadioButtons />
+        <SubHeader text="Configuration" />
+        <RadioButtons setModel = {setModel} setInference = {setInference} />
+        <br />
         <SubHeader text="Select File from local directory" />
         <input type="file" name="file" accept="image/*" className="input" onChange={onImageFileChange} /> 
         <motion.button
