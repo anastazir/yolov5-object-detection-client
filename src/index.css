@@ -275,6 +275,48 @@ input {
   color: var(--dark);
 }
 
+.radio-input{
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  width: 1px;
+  border: 0;
+  overflow: hidden;
+}
+
+.radio-div{
+  background-color: black;
+  position: absolute;
+  top: 3px;
+  left: 1px;
+  right: 1px;
+  bottom: 3px;
+  border-radius: 6px;
+  z-index: -1;
+}
+
+
+.motion-label{
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 2px;
+  text-align: center;
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
+  z-index: 2;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  @media (min-width: 768px) {
+    font-size: 1.125rem;
+  }
+}
+
 .crop-button{
   padding: 0 1rem;
   margin: 2rem auto auto 0;
