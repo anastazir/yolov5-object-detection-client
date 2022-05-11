@@ -27,7 +27,8 @@ function App() {
   const loading = useSelector((state) => state.canvasReducer.loading);
   const openCanvas = useSelector((state) => state.canvasReducer.openCanvas);
   const [text, setText] = useState("");
-  
+  const [score, setscore] = useState("65")
+
   let uploadedImage= null
 
   const handleText = (e) =>{
@@ -56,7 +57,8 @@ function App() {
       "base64": base64,
       "int8": "false",
       "int16": inference,
-      "model": model
+      "model": model,
+      "score": score
     }
     dispatch(predictFile(formData))
   }
@@ -78,6 +80,7 @@ function App() {
             "int8" :"false",
             "type": model,
             "int16": inference,
+            "score": score
           }
           dispatch(predictImage(formData))
         }
@@ -116,6 +119,14 @@ function App() {
           onClick={predictImageFile}>
           Predict Local Image
         </motion.button> 
+        <br />
+        <SubHeader text="Score Threshold" />
+        <Input
+          type="number"
+          placeHolder="Add Score Threshold"
+          value={score}
+          onChange={(e)=> setscore(e.target.value)}
+          />
         <br />
         <SubHeader text="Enter image URL" />
         <Input
