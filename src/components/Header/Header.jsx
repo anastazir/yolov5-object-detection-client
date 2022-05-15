@@ -8,7 +8,7 @@ const Header = () => {
       YOLOv5
       <span className="light-blue"> Project </span>
       <span>
-        <a target="_blank" style={{ backgroundColor: "black"}} href="https://github.com/anastazir/tensorflow-image-classification" rel="noreferrer">
+        <a target="_blank" style={{ backgroundColor: "black"}} href="https://github.com/anastazir/yolov5-object-detection-client" rel="noreferrer">
           <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" />
         </a>
       </span>
