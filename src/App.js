@@ -94,7 +94,7 @@ function App() {
   }
   const download = () =>{
     let downloadLink = document.createElement('a');
-    downloadLink.setAttribute('download', 'CanvasAsImage.png');
+    downloadLink.setAttribute('download', 'yolo.png');
     let canvas = document.getElementById('canvas');
     let dataURL = canvas.toDataURL('image/png');
     let url = dataURL.replace(/^data:image\/png/,'data:application/octet-stream');
@@ -110,6 +110,14 @@ function App() {
         <SubHeader text="Configuration" />
         <RadioButtons setModel = {setModel} setInference = {setInference} />
         <br />
+        <SubHeader text="Score Threshold" />
+        <Input
+          type="number"
+          placeHolder="Add Score Threshold"
+          value={score}
+          onChange={(e)=> setscore(e.target.value)}
+          />
+        <br />
         <SubHeader text="Select File from local directory" />
         <input type="file" name="file" accept="image/*" className="input" onChange={onImageFileChange} /> 
         <motion.button
@@ -119,14 +127,6 @@ function App() {
           onClick={predictImageFile}>
           Predict Local Image
         </motion.button> 
-        <br />
-        <SubHeader text="Score Threshold" />
-        <Input
-          type="number"
-          placeHolder="Add Score Threshold"
-          value={score}
-          onChange={(e)=> setscore(e.target.value)}
-          />
         <br />
         <SubHeader text="Enter image URL" />
         <Input
@@ -183,6 +183,7 @@ function App() {
     </div>
     </div>
     <AnimatePresence exitBeforeEnter={true} initial={false}>
+      {!openCanvas && (<Message />)}
       {openCanvas && (<ResultDiv />)}
     </AnimatePresence>
   </>
@@ -190,6 +191,12 @@ function App() {
 }
 
 const SubHeader = ({ text }) => <motion.h2 className="sub-header">{text}</motion.h2>;
+
+const Message = () => <motion.div style={{minHeight:"300px", textAlign:"center", color:"white", verticalAlign:"middle"}}>
+                        <motion.h2 className="sub-header" style={{paddingTop: "100px"}}>
+                          Result table will appear here when you click the Predict button
+                        </motion.h2>
+                      </motion.div>
 
 
 export default App;
