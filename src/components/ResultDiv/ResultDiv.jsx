@@ -17,8 +17,8 @@ const ResultDiv = () => {
       }}
       transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
       >
-        <table>
-        <tr>
+        <table style={{minHeight:"200px"}}>
+        <tr style={{height:"40%"}}>
           <th>Score</th>
           <th>Class Name</th>
           <th>X Min</th>
